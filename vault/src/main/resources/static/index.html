@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" ng-app="vault" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="vault" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="vault" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="vault" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>VAULT</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--From https://www.iconfinder.com/worldtramp1 with Creative Commons license-->
+    <link href="resources/images/favicon.ico" rel="shortcut icon">
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.9/angular-material.min.css">
+    <link rel="stylesheet" href="resources/css/app.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+
+
+    <!--notika-->
+    <!--<link rel="stylesheet" href="assets/notika/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/font-awesome.min.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/meanmenu/meanmenu.min.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/animate.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/normalize.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/wave/waves.min.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/wave/button.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/owl.carousel.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/owl.theme.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/owl.transitions.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/scrollbar/jquery.mCustomScrollbar.min.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/notika-custom-icon.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/main.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/style.css">-->
+    <!--<link rel="stylesheet" href="assets/notika/css/responsive.css">-->
+    <!--<script src="assets/notika/js/vendor/modernizr-2.8.3.min.js"></script>-->
+
+
+    <!--from template https://github.com/puikinsh/sufee-admin-dashboard -->
+    <!--live template https://colorlib.com/polygon/sufee/forms-basic.html-->
+    <link rel="stylesheet" href="assets/css/normalize.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/flag-icon.min.css">
+    <link rel="stylesheet" href="assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="assets/scss/style.css">
+
+    <!--<link href="bower_components/angular-tooltips/dist/angular-tooltips.css" rel="stylesheet" type="text/css" />-->
+</head>
+<body ng-cloak>
+
+<div id="right-panel" class="right-panel">
+    <header id="header" class="header">
+
+        <div class="header-menu">
+
+            <div class="col-sm-7">
+                <div class="header-left">
+
+                </div>
+            </div>
+
+            <div class="col-sm-5">
+                <div class="user-area float-right">
+                    <div class="page-title" style="text-align: right">
+                        <img src="resources/images/vault.png" width="15%" height="15%">
+                        VAULT
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </header>
+
+    <div class="content">
+
+        <status></status>
+        <ng-view></ng-view>
+    </div>
+</div>
+
+<script src="assets/angular/angular.js"></script>
+<script src="assets/angular/angular-aria.js"></script>
+<script src="assets/angular/angular-animate.js"></script>
+<script src="assets/angular/angular-messages.js"></script>
+<script src="assets/angular/angular-route.js"></script>
+<!--<script src="bower_components/moment/moment.js"></script>-->
+<script src="assets/angular/angular-sanitize.js"></script>
+<!--<script src="bower_components/angular/commons.js"></script>-->
+<script src="assets/sorts.js"></script>
+<!--<script src="bower_components/angular/script.js"></script>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js"></script>
+
+
+<script src="app.js"></script>
+
+
+<script src="file/service/file-service.js"></script>
+<script src="file/list/file-list.js"></script>
+<script src="file/list/file-list.component.js"></script>
+<script src="file/list/file-list.controller.js"></script>
+
+<script src="dialogs/dialog.services.js"></script>
+<script src="dialogs/file-model.directive.js"></script>
+<script src="dialogs/new-ca/dialog.new-ca.services.js"></script>
+<script src="dialogs/new-ca/file-cert-form/file-cert-form.js"></script>
+<script src="dialogs/new-ca/file-cert-form/file-cert-form.component.js"></script>
+<script src="dialogs/new-ca/file-cert-form/file-cert-form.controller.js"></script>
+
+<script src="status/status.js"></script>
+<script src="status/status.component.js"></script>
+<script src="status/status.controller.js"></script>
+<script src="status/status.service.js"></script>
+
+
+<script src="assets/js/vendor/jquery-2.1.4.min.js"></script>
+<script src="assets/js/plugins.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+
+
+<!--notika-->
+
+
+<!--<script src="assets/notika/js/counterup/jquery.counterup.min.js"></script>-->
+<!--<script src="assets/notika/js/counterup/waypoints.min.js"></script>-->
+<!--<script src="assets/notika/js/counterup/counterup-active.js"></script>-->
+<!--<script src="assets/notika/js/vendor/jquery-1.12.4.min.js"></script>-->
+<!--<script src="assets/notika/js/bootstrap.min.js"></script>-->
+<!--<script src="assets/notika/js/wow.min.js"></script>-->
+<!--<script src="assets/notika/js/jquery.scrollUp.min.js"></script>-->
+<!--<script src="assets/notika/js/meanmenu/jquery.meanmenu.js"></script>-->
+<!--<script src="assets/notika/js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>-->
+<!--<script src="assets/notika/js/sparkline/jquery.sparkline.min.js"></script>-->
+<!--<script src="assets/notika/js/sparkline/sparkline-active.js"></script>-->
+<!--<script src="assets/notika/js/flot/jquery.flot.js"></script>-->
+<!--<script src="assets/notika/js/flot/jquery.flot.resize.js"></script>-->
+<!--<script src="assets/notika/js/flot/flot-active.js"></script>-->
+<!--<script src="assets/notika/js/knob/jquery.knob.js"></script>-->
+<!--<script src="assets/notika/js/knob/jquery.appear.js"></script>-->
+<!--<script src="assets/notika/js/knob/knob-active.js"></script>-->
+<!--<script src="assets/notika/js/todo/jquery.todo.js"></script>-->
+<!--<script src="assets/notika/js/wave/waves.min.js"></script>-->
+<!--<script src="assets/notika/js/wave/wave-active.js"></script>-->
+<!--<script src="assets/notika/js/plugins.js"></script>-->
+<!--<script src="assets/notika/js/main.js"></script>-->
+</body>
+</html>

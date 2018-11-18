@@ -1,0 +1,39 @@
+<form name="form" novalidate>
+    <!--file input-->
+    <div class="row form-group">
+        <div class="col-12">
+            <label for="certFileInput" class="form-control-label">Wybierz plik certyfikatu</label>
+        </div>
+        <div class="col-12">
+            <input id="certFileInput" name="certFileInput" class="form-control-file" type="file" file-model="$ctrl.certFile"
+                   accept=".txt, .pdf, .doc" required>
+        </div>
+        <div ng-show="form.$submitted || form.certFileInput.$touched" class="col-12">
+            <small ng-show="form.certFileInput.$error.required" class="form-text" style="color: red">Certyfikat jest wymagany</small>
+        </div>
+    </div>
+    <!--url input-->
+    <!--<div class="row form-group">-->
+        <!--<div class="col-12">-->
+            <!--<label for="urlInput" class="form-control-label">Podaj adres listy CRL:</label>-->
+        <!--</div>-->
+        <!--<div class="col-12">-->
+            <!--<input type="text" id="urlInput" name="urlInput" placeholder="Adres listy CRL" class="form-control" ng-model="$ctrl.url"-->
+                   <!--ng-class="{'is-invalid': (form.$submitted || form.urlInput.$touched) && form.urlInput.$error.required}" required="">-->
+        <!--</div>-->
+        <!--<div ng-show="form.$submitted || form.urlInput.$touched" class="col-12">-->
+            <!--<small ng-show="form.urlInput.$error.required" class="form-text" style="color: red">Adres listy CRL jest wymagany</small>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--buttons-->
+    <div class="row form-group">
+        <div class="col-12" style="text-align: right;">
+            <button type="submit" class="btn btn-primary" ng-click="$ctrl.onSubmit(form)" title="Dodaj nowy urząd certyfikacji">
+                <i class="fa fa-arrow-circle-o-right"></i>&nbsp;Add
+            </button>
+            <button type="reset" class="btn btn-secondary" ng-click="$ctrl.onReset(form)" title="Wyczyść formularz">
+                <i class="fa fa-magic"></i>&nbsp;Reset
+            </button>
+        </div>
+    </div>
+</form>

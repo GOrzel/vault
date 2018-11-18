@@ -1,0 +1,14 @@
+<div class="alert alert-dismissible" role="alert" ng-if="$ctrl.visible"
+            ng-class="{'alert-success': $ctrl.type === 'success', 'alert-warning': $ctrl.type === 'warning', 'alert-danger': $ctrl.type === 'error'}">
+
+    {{$ctrl.text}}
+
+    <div ng-if="$ctrl.description">
+        <hr>
+        <p class="mb-0">{{$ctrl.description}}</p>
+    </div>
+
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="$ctrl.onCloseButtonClicked($event)">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
