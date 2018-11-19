@@ -13,4 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface File2TagsRepository extends CrudRepository<File2Tags, Long> {
 
     void deleteAllByFileAndTag(File file, Tag tag);
+    void deleteAllByFile(File file);
+    File2Tags getFile2TagsByFileAndTag(File file, Tag tag);
+
 }

@@ -6,8 +6,10 @@ angular.module('vault', [
     'ngMaterial',
     'ngMessages',
     'vault.fileList',
+    'vault.fileView',
     'vault.status',
-    'vault.dialog'
+    'vault.dialog',
+    'vault.navbar'
 
 ]);
 
@@ -17,16 +19,10 @@ angular.module('vault')
 
         $routeProvider.when('/file', {
             template: '<file-list></file-list>'
-        // }).when('/ca/:id', {
-        //     template: '<ca-view></ca-view>'
-        // }).when('/crl', {
-        //     template: '<crl-list></crl-list>',
-        // }).when('/crl/:id', {
-        //     template: '<crl-view></crl-view>'
-        // }).when('/tools', {
-        //     template: '<tools></tools>'
-        // }).when('/configuration', {
-        //     template: '<configuration></configuration>'
+        }).when('/file/:id', {
+            template: '<file-view></file-view>'
+        }).when('/tag', {
+            template: '<tag-list></tag-list>',
         }).otherwise({
             redirectTo: '/file'
         });

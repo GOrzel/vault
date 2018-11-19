@@ -23,7 +23,7 @@ public class File {
     @Column(name = "hash", length = 511)
     private String hash;
 
-    @Column(name = "data", columnDefinition = "BLOB")
+    @Column(name = "data", columnDefinition = "MEDIUMBLOB")
     private byte[] data;
 
     @Column(name = "create_date")

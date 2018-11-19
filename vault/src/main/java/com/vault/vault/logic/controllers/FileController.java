@@ -29,8 +29,8 @@ public class FileController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public FilePresentation getFile(@PathVariable("id") long id) {
-        return fileService.getFileById(id);
+    public FilePresentation getFile(@PathVariable("id") long id){
+            return fileService.getFileById(id);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -42,11 +42,6 @@ public class FileController {
     public boolean deleteFile(@PathVariable("id") long id) {
         return fileService.deleteFile(id);
     }
-
-//    @RequestMapping(value = "/{fileId}", method = RequestMethod.PUT)
-//    public FilePresentation addTagToFile(@PathVariable("fileId") Long fileId, @RequestParam("tagId") Long tagId) {
-//        return fileService.addTagToFile(fileId, tagId);
-//    }
 
     @RequestMapping(value = "/{id}/tag", method = RequestMethod.PUT)
     public FilePresentation setFileTags(@PathVariable("id") Long id, @RequestBody ArrayList<Long> tags) {

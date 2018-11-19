@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="card-header">
+        <strong class="card-title">Document: </strong>
+        <strong class="card-title" ng-if="$ctrl.data.name.length > 0">{{$ctrl.data.name}}</strong>
+    </div>
+    <div class="card-body">
+        <nav>
+            <button class="btn btn-secondary btn-sm" ng-click="$ctrl.goBackToFileList()" title="Go back">
+                <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Go back
+            </button>
+        </nav>
+        <div class="tab-content pl-3 pt-2">
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-borderless table-hover">
+                        <tbody>
+                        <tr>
+                            <td style="width: 40%">Id</td>
+                            <td>
+                               {{$ctrl.data.id}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%">Name</td>
+                            <td>
+                               {{$ctrl.data.name}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%">Add date</td>
+                            <td>
+                               {{$ctrl.data.addDate}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%">Hash value</td>
+                            <td>
+                               {{$ctrl.data.hash}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%">Tags</td>
+                            <td>
+                               {{$ctrl.parseTags()}}
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-12">
+                            <button style="width: 150px;" class="btn btn-success" ng-if="!$ctrl.data.active"
+                                    title="Aktywuj urząd certyfikacji" ng-click="$ctrl.onActivateButtonClicked($event)">
+                                <i class="fa fa-check-circle-o"></i>&nbsp;Aktywuj
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm" title="Download"
+                                    ng-click="$ctrl.downloadFile(item.id)">
+                                <i class="fa fa-pencil"></i>&nbsp;Download
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm" title="Delete"
+                                    ng-click="$ctrl.removeFile(item.id)">
+                                <i class="fa fa-trash-o"></i>&nbsp;Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

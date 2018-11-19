@@ -44,8 +44,9 @@ public class FilePresentation {
                         new TagPresentation(a.getTag()));
             });
         } catch (NullPointerException e) {
-            LOG.warn("File don't have any tags" + e);
+            LOG.warn("File don't have any tags. " + e);
         }
+        results.sort((o1,o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
         return results;
     }
 
