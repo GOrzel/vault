@@ -2,15 +2,20 @@
     <div class="card-header">
         <div class="col-sm-4">
             <div class="float-left">
-                <strong class="card-title">Files</strong>
+                <strong class="card-title">Tags</strong>
             </div>
 
         </div>
         <div class="col-sm-8">
             <div class="float-right">
-                <button type="button" class="btn btn-outline-primary" ng-click="$ctrl.addNewFile()">
-                    <i class="fa fa-plus"></i>&nbsp;Add file
+                <button type="button" class="btn btn-outline-primary" ng-click="$ctrl.addNewTag()">
+                    <i class="fa fa-plus"></i>&nbsp;Add tag
                 </button>
+            </div>
+            <div class="float-right">
+                <input name="text-input" type="text" placeholder="Tag name" class="form-control-sm form-control"
+                       ng-model="$ctrl.name"
+                       style="width: 100%; height: 100%;">
             </div>
         </div>
     </div>
@@ -23,22 +28,12 @@
                         Id
                     </sort-control>
                 </th>
-                <th scope="col" width="40%">
+                <th scope="col" width="80%">
                     <sort-control field="sortModel.orderByField" reverse="sortModel.reverseSort" tag="'name'">
                         Name
                     </sort-control>
                 </th>
-                <th scope="col" width="15%">
-                    <sort-control field="sortModel.orderByField" reverse="sortModel.reverseSort" tag="'addDate'">
-                        Added
-                    </sort-control>
-                </th>
-                <th scope="col" width="35%">
-                    <sort-control field="sortModel.orderByField" reverse="sortModel.reverseSort" tag="'tags'">
-                        Tags
-                    </sort-control>
-                </th>
-                <th scope="col" width="0%">Actions</th>
+                <th scope="col" width="10%">Actions</th>
             </tr>
             </thead>
             <thead>
@@ -53,15 +48,6 @@
                            ng-model="$ctrl.filterModel.name"
                            ng-model-options="{debounce : 250}" style="width: 100%;">
                 </th>
-                <th>
-                    <md-datepicker ng-model="$ctrl.filterModel.addDate" md-placeholder="Add date"
-                                   md-open-on-focus></md-datepicker>
-                </th>
-                <th>
-                    <input name="text-input" type="text" class="form-control-sm form-control"
-                           ng-model="$ctrl.filterModel.tags"
-                           ng-model-options="{debounce : 250}" style="width: 100%;">
-                </th>
                 <th style="text-align: center">
                     <button class="btn btn-secondary btn-sm" ng-click="$ctrl.resetFilter()"
                             title="Clear filters">
@@ -71,23 +57,17 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in $ctrl.items | orderBy:sortModel.orderByField:sortModel.reverseSort | filterFile:$ctrl.filterModel">
-                <td ng-dblclick="$ctrl.enterDetails(item.id)" scope="row">
+            <tr ng-repeat="item in $ctrl.items | orderBy:sortModel.orderByField:sortModel.reverseSort | filterTag:$ctrl.filterModel">
+                <td scope="row">
                     {{item.id}}
                 </td>
-                <td ng-dblclick="$ctrl.enterDetails(item.id)" scope="row">
+                <td scope="row">
                     {{item.name}}
                 </td>
-                <td ng-dblclick="$ctrl.enterDetails(item.id)" style="text-align: center">
-                    {{item.addDate | date: "yyyy.MM.dd" }}
-                </td>
-                <td ng-dblclick="$ctrl.enterDetails(item.id)" scope="row">
-                    {{$ctrl.parseTags(item)}}
-                </td>
                 <td style="text-align: center">
-                    <button type="button" class="btn btn-primary btn-sm" title="Edit"
-                            ng-click="$ctrl.enterDetails(item.id)">
-                        <i class="fa fa-pencil"></i>&nbsp;
+                    <button type="button" class="btn btn-danger btn-sm" title="Delete"
+                            ng-click="$ctrl.removeTag(item.id)">
+                        <i class="fa fa-trash-o"></i>&nbsp;Delete
                     </button>
 
                 </td>

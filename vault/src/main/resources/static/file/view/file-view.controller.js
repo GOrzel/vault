@@ -2,24 +2,25 @@
 
 angular.module('vault.fileView').controller('FileViewController', FileViewController);
 
-FileViewController.$inject = ['fileService', 'statusService', 'fileDialog','$routeParams'];
-function FileViewController(fileService, statusService, fileDialog, $routeParams) {
+FileViewController.$inject = ['fileService', 'statusService', 'dialogService','$routeParams'];
+function FileViewController(fileService, statusService, dialogService, $routeParams) {
     var vm = this;
 
     vm.fileId = $routeParams.id;
-    vm.data = '';
+    vm.localFile = '';
     vm.goBackToFileList = goBackToFileList;
     vm.removeFile = removeFile;
     vm.downloadFile = downloadFile;
     vm.parseTags = parseTags;
     vm.getFile = getFile;
+    vm.editTags = editTags;
 
     vm.getFile(vm.fileId);
 
     function getFile(fileID) {
         fileService.getFile(fileID).then(function (response) {
-            vm.data = response.data;
-            console.log(vm.data);
+            vm.localFile = response.data;
+            console.log(vm.localFile);
         }, function (error) {
             var status = 'Cannot load data';
             var desc = (error.data != null && error.data.message != null) ? error.data.message : '';
@@ -29,19 +30,12 @@ function FileViewController(fileService, statusService, fileDialog, $routeParams
         });
     }
 
-    function downloadFile(base64string) {
-        base64string = "xbvDk8WBxIY=";
-        var name = 'cos.txt';
+    function downloadFile() {
         var download = document.createElement('a');
-        download.setAttribute('href', 'data:application/octet-stream;base64,' + base64string);
-        download.setAttribute('download', name);
-        // download.click(function () {
-        //     download.attr('href', 'data:application/octet-stream;base64,' + base64string);
-        // });
-        // $('#execute').replaceWith(download);
+        download.setAttribute('href', 'data:application/octet-stream;base64,' + vm.localFile.data);
+        download.setAttribute('download', vm.localFile.name);
         download.click();
         download.remove();
-        // $('.output').remove();
     }
 
     function goBackToFileList() {
@@ -49,7 +43,7 @@ function FileViewController(fileService, statusService, fileDialog, $routeParams
     }
 
     function parseTags() {
-        var file = vm.data;
+        var file = vm.localFile;
         var result = '';
 
         var tags = file.tags;
@@ -64,12 +58,16 @@ function FileViewController(fileService, statusService, fileDialog, $routeParams
         return result;
     }
 
-    function removeFile(id) {
+    function editTags() {
+        console.log('editTags');
+    }
+
+    function removeFile() {
         var title = 'Do you really want to delete that file?';
-        fileDialog.showConfirm('', title, '').then(function () {
-            fileService.deleteFile(id).then(function (response) {
-                removeFileFromArray(id);
+        dialogService.showConfirm('', title, '').then(function () {
+            fileService.deleteFile(vm.localFile.id).then(function (response) {
                 statusService.showStatusAlert('Removed file.', '', 'warning');
+                vm.goBackToFileList();
             }, function (error) {
                 var desc = (error.data != null && error.data.message != null) ? error.data.message : '';
                 statusService.showStatusAlert('Failed to remove file', desc, 'error');

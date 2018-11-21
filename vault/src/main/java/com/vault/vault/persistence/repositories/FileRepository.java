@@ -13,4 +13,5 @@ public interface FileRepository extends CrudRepository<File, Long> {
     File getFileById(long id);
     File getFileByName(String name);
     File getFileByHash(String hash);
+    Long countFileByHash(String hash);
 }

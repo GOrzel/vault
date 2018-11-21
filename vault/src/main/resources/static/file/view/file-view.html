@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header">
         <strong class="card-title">Document: </strong>
-        <strong class="card-title" ng-if="$ctrl.data.name.length > 0">{{$ctrl.data.name}}</strong>
+        <strong class="card-title">{{$ctrl.localFile.name}}</strong>
     </div>
     <div class="card-body">
         <nav>
@@ -17,31 +17,35 @@
                         <tr>
                             <td style="width: 40%">Id</td>
                             <td>
-                               {{$ctrl.data.id}}
+                               {{$ctrl.localFile.id}}
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 40%">Name</td>
                             <td>
-                               {{$ctrl.data.name}}
+                               {{$ctrl.localFile.name}}
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 40%">Add date</td>
                             <td>
-                               {{$ctrl.data.addDate}}
+                               {{$ctrl.localFile.addDate}}
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 40%">Hash value</td>
                             <td>
-                               {{$ctrl.data.hash}}
+                               {{$ctrl.localFile.hash}}
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 40%">Tags</td>
                             <td>
                                {{$ctrl.parseTags()}}
+                                <button type="button" class="btn btn-primary btn-sm float-right" title="Edit"
+                                        ng-click="$ctrl.editTags()">
+                                    <i class="fa fa-pencil"></i>&nbsp;Edit
+                                </button>
                             </td>
                         </tr>
 
@@ -49,16 +53,12 @@
                     </table>
                     <div class="row">
                         <div class="col-12">
-                            <button style="width: 150px;" class="btn btn-success" ng-if="!$ctrl.data.active"
-                                    title="Aktywuj urząd certyfikacji" ng-click="$ctrl.onActivateButtonClicked($event)">
-                                <i class="fa fa-check-circle-o"></i>&nbsp;Aktywuj
-                            </button>
                             <button type="button" class="btn btn-primary btn-sm" title="Download"
-                                    ng-click="$ctrl.downloadFile(item.id)">
+                                    ng-click="$ctrl.downloadFile()">
                                 <i class="fa fa-pencil"></i>&nbsp;Download
                             </button>
                             <button type="button" class="btn btn-danger btn-sm" title="Delete"
-                                    ng-click="$ctrl.removeFile(item.id)">
+                                    ng-click="$ctrl.removeFile()">
                                 <i class="fa fa-trash-o"></i>&nbsp;Delete
                             </button>
                         </div>

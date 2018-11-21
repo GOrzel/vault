@@ -1,5 +1,6 @@
 package com.vault.vault.logic.services;
 
+import com.vault.vault.logic.exceptions.FileDuplicateException;
 import com.vault.vault.logic.exceptions.FileNotExistsException;
 import com.vault.vault.logic.exceptions.FileWithoutDataException;
 import com.vault.vault.logic.exceptions.TagNotExistsException;
@@ -45,92 +46,38 @@ public class FileService {
         return results;
     }
 
-    public FilePresentation getFileById(long id) throws FileNotExistsException,FileWithoutDataException {
-            File file = fileRepository.getFileById(id);
-            if (file == null) throw new FileNotExistsException("There is no file with that ID");
-            FilePresentation result = new FilePresentation(file);
-            try{
+    public FilePresentation getFileById(long id) throws FileNotExistsException, FileWithoutDataException {
+        File file = fileRepository.getFileById(id);
+        if (file == null) throw new FileNotExistsException("There is no file with that ID");
+        FilePresentation result = new FilePresentation(file);
+        try {
             result.setData(file.getData());
-            }catch (NullPointerException e){
-                throw new FileWithoutDataException("Chosen file is empty.");
-            }
-            return result;
+        } catch (NullPointerException e) {
+            throw new FileWithoutDataException("Chosen file is empty.");
+        }
+        return result;
 
-    }
-
-    public FilePresentation getFileByName(String name) {
-        return new FilePresentation(fileRepository.getFileByName(name));
-    }
-
-    public FilePresentation getFileByHash(String hash) {
-        return new FilePresentation(fileRepository.getFileByHash(hash));
     }
 
     public FilePresentation addFile(FilePresentation filePresentation) {
-        File file = new File();
-        file.setName(filePresentation.getName());
-        file.setAddDate(new Date());
-        file.setHash(String.valueOf(
-                java.util.Arrays.hashCode(
-                        filePresentation.getData())));
-        file.setData(filePresentation.getData());
-        fileRepository.save(file);
-        return new FilePresentation(file);
+            File file = new File();
+            file.setName(filePresentation.getName());
+            file.setAddDate(new Date());
+            file.setHash(String.valueOf(
+                    java.util.Arrays.hashCode(
+                            filePresentation.getData())));
+            if (fileRepository.countFileByHash(file.getHash()) > 0){
+                throw new FileDuplicateException("This file already exists in database.");
+            }
+            file.setData(filePresentation.getData());
+            fileRepository.save(file);
+            return new FilePresentation(file);
     }
 
     @Transactional
     public boolean deleteFile(Long id) {
         fileRepository.deleteById(id);
         return true;
-    }
-
-    public FilePresentation addTagsToFile(long fileId, ArrayList<Long> tagIds) {
-        File file = fileRepository.getFileById(fileId);
-        Set<File2Tags> tags = file.getFile2Tags();
-
-        if (tagIds.isEmpty()) return new FilePresentation(file);
-
-        for (Long tagId : tagIds) {
-            Tag tag = tagRepository.getTagById(tagId);
-            File2Tags newTag = new File2Tags(file, tag);
-            tags.add(newTag);
-        }
-        file.setFile2Tags(tags);
-        fileRepository.save(file);
-
-        return new FilePresentation(file);
-    }
-
-    public FilePresentation removeTagFromFile(long fileId, long tagId) {
-        File file = fileRepository.getFileById(fileId);
-        Tag tag = tagRepository.getTagById(tagId);
-        file2TagsRepository.deleteAllByFileAndTag(file, tag);
-        return new FilePresentation(file);
-    }
-
-    public FilePresentation removeTagsFromFile(long fileId, ArrayList<Long> tagIds) {
-        File file = fileRepository.getFileById(fileId);
-        Set<File2Tags> tags = file.getFile2Tags();
-
-        if (tagIds.isEmpty()) return new FilePresentation(file);
-
-        for (Long tagId : tagIds) {
-            Tag tag = tagRepository.getTagById(tagId);
-            file2TagsRepository.deleteAllByFileAndTag(file, tag);
-        }
-        return new FilePresentation(file);
-    }
-
-    public FilePresentation addTagToFile(long fileId, long tagId) {
-        File file = fileRepository.getFileById(fileId);
-        Tag tag = tagRepository.getTagById(tagId);
-        File2Tags newTag = new File2Tags(file, tag);
-        Set<File2Tags> tags = file.getFile2Tags();
-        tags.add(newTag);
-        file.setFile2Tags(tags);
-        fileRepository.save(file);
-
-        return new FilePresentation(file);
     }
 
     @Transactional
@@ -141,8 +88,8 @@ public class FileService {
         for (Long tagId : tagIds) {
             Tag tag = tagRepository.getTagById(tagId);
             if (tag == null) throw new TagNotExistsException("You tried to add nonexistent tag");
-            File2Tags newTag = file2TagsRepository.getFile2TagsByFileAndTag(file,tag);
-            if(newTag == null) newTag = new File2Tags(file, tag);
+            File2Tags newTag = file2TagsRepository.getFile2TagsByFileAndTag(file, tag);
+            if (newTag == null) newTag = new File2Tags(file, tag);
             tags.add(newTag);
         }
         file.setFile2Tags(tags);

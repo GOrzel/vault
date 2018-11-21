@@ -20,14 +20,14 @@ public class File {
     @Column(name = "name", columnDefinition = "TEXT")
     private String name;
 
-    @Column(name = "hash", length = 511)
+    @Column(name = "hash", length = 127, unique = true)
     private String hash;
 
     @Column(name = "data", columnDefinition = "MEDIUMBLOB")
     private byte[] data;
 
     @Column(name = "create_date")
-    @Temporal(TemporalType.DATE) //albo timestamp
+    @Temporal(TemporalType.DATE)
     private Date addDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "file", cascade = CascadeType.ALL)

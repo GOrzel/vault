@@ -13,4 +13,5 @@ public interface TagRepository extends CrudRepository<Tag, Long> {
     Tag getTagById(long id);
     Tag getTagByName(String name);
     void deleteTagById(long id);
+    Long countTagByName(String name);
 }

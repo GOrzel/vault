@@ -7,9 +7,12 @@ angular.module('vault', [
     'ngMessages',
     'vault.fileList',
     'vault.fileView',
+    'vault.tagList',
+    'vault.about',
     'vault.status',
     'vault.dialog',
-    'vault.navbar'
+    'vault.navbar',
+    '720kb.tooltips'
 
 ]);
 
@@ -22,7 +25,9 @@ angular.module('vault')
         }).when('/file/:id', {
             template: '<file-view></file-view>'
         }).when('/tag', {
-            template: '<tag-list></tag-list>',
+            template: '<tag-list></tag-list>'
+        }).when('/about', {
+            template: '<about></about>'
         }).otherwise({
             redirectTo: '/file'
         });

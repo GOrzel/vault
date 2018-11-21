@@ -1,8 +1,11 @@
 <div class="row page-title">
-    <button class="btn btn-outline-secondary" ng-class="{ selectedTabButton: $ctrl.isActive('/file') }">
-        <a href="#/file"><i class="menu-icon fa fa-files-o" title="Files"></i>&nbsp;Files</a>
+    <button class="btn btn-outline-secondary" ng-click="$ctrl.goTo('#/file')" ng-class="{ selectedTabButton: $ctrl.isActive('/file') }">
+        <a href="#/file"> <i class="menu-icon fa fa-files-o" title="Files"></i>&nbsp;Files</a>
     </button>
-    <button class="btn btn-outline-secondary" ng-class="{ selectedTabButton: $ctrl.isActive('/tag') }">
+    <button class="btn btn-outline-secondary" ng-click="$ctrl.goTo('#/tag')" ng-class="{ selectedTabButton: $ctrl.isActive('/tag') }">
         <a href="#/tag"> <i class="menu-icon fa fa-tags" title="Tags"></i>&nbsp;Tags</a>
+    </button>
+    <button class="btn btn-outline-secondary" ng-click="$ctrl.goTo('#/about')" ng-class="{ selectedTabButton: $ctrl.isActive('/about') }">
+        <a href="#/about"> <i class="menu-icon fa fa-info" title="About"></i>&nbsp;About</a>
     </button>
 </div>

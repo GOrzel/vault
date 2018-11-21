@@ -1,5 +1,6 @@
 package com.vault.vault.logic.services;
 
+import com.vault.vault.logic.exceptions.FileDuplicateException;
 import com.vault.vault.persistence.models.Tag;
 import com.vault.vault.logic.presentations.FilePresentation;
 import com.vault.vault.logic.presentations.TagPresentation;
@@ -35,7 +36,6 @@ public class TagService {
         tagRepository.findAll().forEach(a -> {
             results.add(new TagPresentation(a));
         });
-
         return results;
     }
 
@@ -49,6 +49,9 @@ public class TagService {
 
     public TagPresentation addTag(String name){
         Tag tag = new Tag(name);
+        if (tagRepository.countTagByName(tag.getName()) > 0){
+            throw new FileDuplicateException("This tag already exists in database.");
+        }
         tagRepository.save(tag);
         return new TagPresentation(tag);
     }

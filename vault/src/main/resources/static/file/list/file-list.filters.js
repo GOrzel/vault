@@ -1,39 +1,42 @@
-// 'use strict';
-//
-// angular.module('vault.fileList').filter("filterFile", function () {
-//     return function (items, filterModel) {
-//         items = items.filter(function (el) {
-//             return (el.issuer.toUpperCase().includes(filterModel.keyword.toUpperCase()) || el.subject.toUpperCase().includes(filterModel.keyword.toUpperCase()));
-//         });
-//
-//         items = items.filter(function (el) {
-//             return el.id.toString().includes(filterModel.id);
-//         });
-//
-//         if (filterModel.validUntil) {
-//             items = items.filter(function (el) {
-//                 if (filterModel.validUntil !== '') {
-//                     return (new Date(el.validUntil) <= new Date(filterModel.validUntil));
-//                 }
-//                 return true;
-//             });
-//         }
-//
-//         return items;
-//     }
-// });
-//
-// angular.module('caManager.caList').filter("filterCAName", function () {
-//     return function (el) {
-//         el = el.replace(/.*CN *?= *?(.*?),? *?\w* *?=.*/gi, '$1');
-//         return el;
-//     }
-// });
-//
-// angular.module('caManager.caList').filter("splitFullName",['$sce', function ($sce) {
-//     return function (el) {
-//         el = el.replace(/(\w*?=)/gi, '$1');
-//         // return $sce.trustAs('html',el);
-//         return el;
-//     }
-// }]);
+'use strict';
+
+angular.module('vault.fileList').filter("filterFile", function () {
+    return function (items, filterModel) {
+        items = items.filter(function (el) {
+            return el.id.toString().includes(filterModel.id);
+        });
+
+        items = items.filter(function (el) {
+            return (el.name.toUpperCase().includes(filterModel.name.toUpperCase()) );
+        });
+
+        // if (filterModel.addDate) {
+        //     items = items.filter(function (el) {
+        //         if (filterModel.addDate !== '') {
+        //             return (new Date(el.addDate) <= new Date(filterModel.addDate));
+        //         }
+        //         return true;
+        //     });
+        // }
+
+        items = items.filter(function (el) {
+            return (parseTags(el).toUpperCase().includes(filterModel.tags.toUpperCase()) );
+        });
+
+        return items;
+    };
+
+    function parseTags(file) {
+        var result = '';
+        if (file.tags.length === 0)
+            return '';
+
+        var tags = file.tags;
+        tags.forEach(function (tag) {
+            result += tag.name + ", ";
+        });
+        //remove last comma
+        result = result.slice(0, result.length - 2);
+        return result;
+    }
+});

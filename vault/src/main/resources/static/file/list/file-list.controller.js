@@ -2,13 +2,14 @@
 
 angular.module('vault.fileList').controller('FileListController', FileListController);
 
-FileListController.$inject = ['fileService', 'statusService', 'fileDialog'];
-function FileListController(fileService, statusService, fileDialog) {
+FileListController.$inject = ['fileService', 'statusService', 'dialogService'];
+function FileListController(fileService, statusService, dialogService) {
     var vm = this;
 
     vm.items = [];
     vm.filterModel = {};
     vm.fileData = {};
+    // vm.allowedExtensions=["txt","doc","pdf","docx"];
 
     vm.getAllFiles = getAllFiles;
     vm.addNewFile = addNewFile;
@@ -22,41 +23,26 @@ function FileListController(fileService, statusService, fileDialog) {
 
     function getAllFiles() {
         fileService.getAllFiles().then(function (response) {
-            console.log(response);
             vm.items = response.data;
-            response.data.forEach(function (a) {
-                parseTags(a);
-            })
+            // console.log(response);
+            // response.data.forEach(function (a) {
+            //     parseTags(a);
+            // })
         }, function (error) {
-            var status = 'Błąd podczas pobierania informacji o liście plików.';
+            var status = 'Failed to receive file list.';
             var desc = (error.data != null && error.data.message != null) ? error.data.message : '';
             statusService.showStatusAlert(status, desc, 'error');
             console.log("Error: " + error);
         });
     }
 
-    function downloadFile(base64string) {
-        base64string = "xbvDk8WBxIY=";
-        var name = 'cos.txt';
-        var download = document.createElement('a');
-        download.setAttribute('href', 'data:application/octet-stream;base64,' + base64string);
-        download.setAttribute('download', name);
-        // download.click(function () {
-        //     download.attr('href', 'data:application/octet-stream;base64,' + base64string);
-        // });
-        // $('#execute').replaceWith(download);
-        download.click();
-        download.remove();
-        // $('.output').remove();
-    }
-
     function addNewFile() {
-        var fileSelect = document.createElement('input'); //input it's not displayed in html, I want to trigger it form other elements
+        var fileSelect = document.createElement('input');
         fileSelect.type = 'file';
 
-        if (fileSelect.disabled) { //check if browser support input type='file' and stop execution of controller
+        if (fileSelect.disabled) {
             var status = 'Browser doesn\'t support HTML5';
-            var desc = ('Your browser doesn\'t support HTML5 input type=\'File\'');
+            var desc = ('Your browser doesn\'t support HTML5 input type=\'file\'');
             statusService.showStatusAlert(status, desc, 'error');
             return;
         }
@@ -65,22 +51,34 @@ function FileListController(fileService, statusService, fileDialog) {
 
         fileSelect.onchange = function () {
             var file = fileSelect.files[0];
-            console.log(file);
+            // console.log(file);
             if (file.size > 16777216) {
-                console.log('hfj');
                 var status = 'File upload error';
                 var desc = 'Your file is bigger than 16MB.';
                 statusService.showStatusAlert(status, desc, 'error');
                 return;
             }
+            // var ext = file.name.split('.');
+            // if (ext[ext.length-1]) {
+            //     var status = 'Wrong extension';
+            //     var desc = 'This exception is not allowed.';
+            //     statusService.showStatusAlert(status, desc, 'error');
+            //     return;
+            // }
             var reader = new FileReader();
             var name = file.name;
 
             reader.onloadend = function (e) {
                 vm.fileData.b64 = e.target.result;
-                fileService.addFile(vm.fileData.b64.replace(/^data.*;base64,/, ""), name).then(function () {
+                fileService.addFile(vm.fileData.b64.replace(/^data.*;base64,/, ""), name).then(function (response) {
+                    // console.log(response);
                     vm.getAllFiles();
-                    //todo error co wtedy
+                    vm.enterDetails(response.data.id);
+                }, function (error) {
+                    var status = 'Failed to upload file';
+                    var desc = (error.data != null && error.data.message != null) ? error.data.message : '';
+                    statusService.showStatusAlert(status, desc, 'error');
+                    console.log("Error: " + error);
                 })
             };
 
@@ -95,6 +93,8 @@ function FileListController(fileService, statusService, fileDialog) {
 
     function parseTags(file) {
         var result = '';
+        if (file.tags.length === 0)
+            return '';
 
         var tags = file.tags;
         tags.forEach(function (tag) {
@@ -102,35 +102,9 @@ function FileListController(fileService, statusService, fileDialog) {
         });
         //remove last comma
         result = result.slice(0, result.length - 2);
-        console.log(result);
+        // console.log(result);
         return result;
     }
-
-    function removeFile(id) {
-        var title = 'Do you really want to delete that file?';
-        fileDialog.showConfirm('', title, '').then(function () {
-            fileService.deleteFile(id).then(function (response) {
-                removeFileFromArray(id);
-                statusService.showStatusAlert('Removed file.', '', 'warning');
-            }, function (error) {
-                var desc = (error.data != null && error.data.message != null) ? error.data.message : '';
-                statusService.showStatusAlert('Failed to remove file', desc, 'error');
-                console.log(error);
-
-            })
-        });
-    }
-
-    function removeFileFromArray(id) {
-        function fileHasProperId(file) {
-            return file.id == id;
-        }
-
-        var item = vm.items.filter(fileHasProperId)[0];
-        var index = vm.items.indexOf(item);
-        vm.items.splice(index, 1);
-    }
-
 
     function resetFilter() {
         vm.filterModel = {
