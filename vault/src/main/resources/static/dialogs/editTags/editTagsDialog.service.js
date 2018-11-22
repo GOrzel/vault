@@ -18,14 +18,14 @@ function EditTagsDialogServiceFactory($mdDialog, statusService, fileService, tag
             locals: {fileId: fileId, currentTags: currentTags}
         })
             .then(function (response) {
-                console.log(response);
+                // console.log(response);
                 // var status = 'Tags updated';
                 // statusService.showStatusAlert(status, ' ', 'success');
                 return response;
             }, function (error) {
                 console.log("Error: " + error);
                 var status = 'Failed to change tags';
-                var desc = (error.data != null && error.data.message != null) ? error.data.message : '';
+                var desc = (error != null && error.data != null && error.data.message != null) ? error.data.message : '';
                 statusService.showStatusAlert(status, desc, 'error');
             });
     }

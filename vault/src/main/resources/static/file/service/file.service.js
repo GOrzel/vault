@@ -27,18 +27,10 @@ function FileServiceFactory($http) {
     }
 
     function addFile(file, name) {
-        // var myFormData = new FormData();
-        // myFormData.append('name', name);
-        // myFormData.append('file', file);
-
-        return $http.post('/rest/file', {"name" : name, "data" : file}, {
-            // transformRequest: angular.identity,
-            // headers: {'Content-Type': undefined}
-        });
+        return $http.post('/rest/file', {"name" : name, "data" : file});
     }
 
     function setTags(fileId, tagIds) {
-        console.log(tagIds);
         return $http.put('/rest/file/' + fileId + '/tag', tagIds);
     }
 

@@ -8,35 +8,6 @@
     </md-toolbar>
     <md-dialog-content>
                 <md-content class="md-padding" style="width:800px; height: 600px;">
-                    <!--<form name="form" novalidate>-->
-                        <!--&lt;!&ndash;pem input&ndash;&gt;-->
-                        <!--<div class="row form-group" style="height: 275px;">-->
-                            <!--<div class="col-12">-->
-                                <!--<label for="pemInput" class=" form-control-label">Podaj certyfikat w formacie PEM:</label>-->
-                            <!--</div>-->
-                            <!--<div class="col-12">-->
-            <!--<textarea name="pemInput" id="pemInput" rows="9" placeholder="Certyfikat w formacie PEM" class="form-control"-->
-                      <!--ng-model="$ctrl.pem" ng-pattern="$ctrl.pemRegex" required="" style="resize: none;"-->
-                      <!--ng-class="{'is-invalid': (form.$submitted || form.pemInput.$touched) && (form.pemInput.$error.required || !form.pemInput.$valid)}">-->
-            <!--</textarea>-->
-                            <!--</div>-->
-                            <!--<div ng-show="form.$submitted || form.pemInput.$touched" class="col-12">-->
-                                <!--<small ng-show="form.pemInput.$error.required" class="form-text" style="color: red">Certyfikat jest wymagany</small>-->
-                                <!--<small ng-show="!form.pemInput.$error.required && !form.pemInput.$valid" class="form-text" style="color: red">Nieprawidłowy format cetyfikatu</small>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;buttons&ndash;&gt;-->
-                        <!--<div class="row form-group">-->
-                            <!--<div class="col-12" style="text-align: right;">-->
-                                <!--<button type="submit" class="btn btn-primary" ng-click="$ctrl.onSubmit(form)" title="Dodaj nowy urząd certyfikacji">-->
-                                    <!--<i class="fa fa-arrow-circle-o-right"></i>&nbsp;Dodaj-->
-                                <!--</button>-->
-                                <!--<button type="reset" class="btn btn-secondary" ng-click="$ctrl.onReset(form)" title="Wyczyść formularz">-->
-                                    <!--<i class="fa fa-magic"></i>&nbsp;Wyczyść-->
-                                <!--</button>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</form>-->
                     <table class="table table-bordered table-hover">
                         <thead>
                         <tr>
@@ -84,11 +55,11 @@
                             <td style="text-align: center">
                                 <button ng-if="item.selected === true" type="button" class="btn btn-danger btn-sm" title="Remove"
                                         ng-click="dialog.disableTag(item)">
-                                    <i class="fa fa-plus"></i>&nbsp;Remove
+                                    <i class="fa fa-minus"></i>&nbsp;Remove
                                 </button>
                                 <button ng-if="item.selected === false" type="button" class="btn btn-success btn-sm" title="Add"
                                         ng-click="dialog.enableTag(item)">
-                                    <i class="fa fa-minus"></i>&nbsp;Add
+                                    <i class="fa fa-plus"></i>&nbsp;Add
                                 </button>
 
                             </td>
@@ -98,10 +69,10 @@
                     <div class="row form-group">
                         <div class="col-12" style="text-align: right;">
                             <button type="submit" class="btn btn-primary" ng-click="dialog.saveTags()">
-                                <i class="fa fa-arrow-circle-o-right"></i>&nbsp;Save tags
+                                <i class="fa fa-save"></i>&nbsp;Save tags
                             </button>
                             <button type="reset" class="btn btn-secondary" ng-click="dialog.resetTags()">
-                                <i class="fa fa-magic"></i>&nbsp;Reset
+                                <i class="fa fa-undo"></i>&nbsp;Reset selection
                             </button>
                         </div>
                     </div>

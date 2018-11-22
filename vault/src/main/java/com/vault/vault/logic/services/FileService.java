@@ -102,7 +102,6 @@ public class FileService {
         if (currentTags.size() > 0){
             currentTags.forEach((o) -> file2TagsRepository.deleteByFileAndTag(file,o.getTag()));
         }
-//        file2TagsRepository.deleteAllByFile(file);
         file.setFile2Tags(tags);
         fileRepository.save(file);
 
