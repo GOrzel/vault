@@ -21,7 +21,7 @@ function TagListController(tagService, statusService, dialogService) {
 
     function getAllTags() {
         tagService.getAllTags().then(function (response) {
-            console.log(response);
+            // console.log(response);
             vm.items = response.data;
         }, function (error) {
             var status = 'Cannot get tag list.';
@@ -40,7 +40,7 @@ function TagListController(tagService, statusService, dialogService) {
             vm.getAllTags();
         }, function (error) {
             vm.name = '';
-            var status = 'Failed to receive tag list.';
+            var status = 'Failed to add new tag.';
             var desc = (error.data != null && error.data.message != null) ? error.data.message : '';
             statusService.showStatusAlert(status, desc, 'error');
             console.log("Error: " + error);

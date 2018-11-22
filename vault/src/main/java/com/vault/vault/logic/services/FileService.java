@@ -11,6 +11,8 @@ import com.vault.vault.logic.presentations.FilePresentation;
 import com.vault.vault.persistence.repositories.File2TagsRepository;
 import com.vault.vault.persistence.repositories.FileRepository;
 import com.vault.vault.persistence.repositories.TagRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,9 @@ import java.util.*;
  */
 @Service
 public class FileService {
+
+    private static Logger LOG = LoggerFactory.getLogger(FileService.class);
+
 
     private FileRepository fileRepository;
     private File2TagsRepository file2TagsRepository;
@@ -84,6 +89,7 @@ public class FileService {
     public FilePresentation setFileTags(long fileId, ArrayList<Long> tagIds) throws TagNotExistsException {
         File file = fileRepository.getFileById(fileId);
         Set<File2Tags> tags = new HashSet<>();
+        Set<File2Tags> currentTags = file2TagsRepository.getAllByFile(file);
 
         for (Long tagId : tagIds) {
             Tag tag = tagRepository.getTagById(tagId);
@@ -91,7 +97,12 @@ public class FileService {
             File2Tags newTag = file2TagsRepository.getFile2TagsByFileAndTag(file, tag);
             if (newTag == null) newTag = new File2Tags(file, tag);
             tags.add(newTag);
+            currentTags.remove(newTag);
         }
+        if (currentTags.size() > 0){
+            currentTags.forEach((o) -> file2TagsRepository.deleteByFileAndTag(file,o.getTag()));
+        }
+//        file2TagsRepository.deleteAllByFile(file);
         file.setFile2Tags(tags);
         fileRepository.save(file);
 

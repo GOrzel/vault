@@ -2,8 +2,8 @@
 
 angular.module('vault.fileView').controller('FileViewController', FileViewController);
 
-FileViewController.$inject = ['fileService', 'statusService', 'dialogService','$routeParams'];
-function FileViewController(fileService, statusService, dialogService, $routeParams) {
+FileViewController.$inject = ['fileService', 'statusService', 'dialogService', 'editTagsDialogService', '$routeParams'];
+function FileViewController(fileService, statusService, dialogService, editTagsDialogService,  $routeParams) {
     var vm = this;
 
     vm.fileId = $routeParams.id;
@@ -20,7 +20,6 @@ function FileViewController(fileService, statusService, dialogService, $routePar
     function getFile(fileID) {
         fileService.getFile(fileID).then(function (response) {
             vm.localFile = response.data;
-            console.log(vm.localFile);
         }, function (error) {
             var status = 'Cannot load data';
             var desc = (error.data != null && error.data.message != null) ? error.data.message : '';
@@ -47,6 +46,8 @@ function FileViewController(fileService, statusService, dialogService, $routePar
         var result = '';
 
         var tags = file.tags;
+        if(tags === undefined)
+            return;
         tags.forEach(function (tag) {
             result += tag.name + ", ";
         });
@@ -54,12 +55,13 @@ function FileViewController(fileService, statusService, dialogService, $routePar
         result = result.slice(0, result.length - 2);
 
         if(result === '') result = "No tags defined for this file";
-        console.log(result);
         return result;
     }
 
-    function editTags() {
-        console.log('editTags');
+    function editTags(event) {
+        editTagsDialogService.showEditTagsDialog(event, vm.fileId, vm.localFile.tags).then(function (response) {
+            vm.getFile(vm.fileId);
+        });
     }
 
     function removeFile() {

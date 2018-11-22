@@ -5,11 +5,11 @@
 
 	<groupId>com.vault</groupId>
 	<artifactId>vault</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.9</version>
 	<packaging>jar</packaging>
 
 	<name>vault</name>
-	<description>Demo project for Spring Boot</description>
+	<description>App created by Grzegorz Orzeł</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

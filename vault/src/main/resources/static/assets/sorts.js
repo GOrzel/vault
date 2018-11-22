@@ -6,29 +6,9 @@ angular.module("sorts")
     .directive('sortControl', function () {
         var controller = ['$scope', '$rootScope', function ($scope, $rootScope) {
 
-            var vm = this;
+                var vm = this;
 
                 $scope.state = undefined;
-
-                function getURLParameter(name) {
-                    return decodeURIComponent((new RegExp('[?|&]' + name + '='
-                            + '([^&;]+?)(&|#|;|$)').exec(location.search) || [ , "" ])[1]
-                            .replace(/\+/g, '%20'))
-                        || null;
-                }
-
-                function getSorting() {
-                    var config = JSON.parse(sessionStorage.getItem(location.pathname));
-
-                    if (getURLParameter("reset") === "true")
-                        sessionStorage.removeItem(location.pathname);
-
-                    if (config != null && 'sort' in config && config.sort.tag === $scope.tag) {
-                        $scope.state = config.sort.asc;
-                        $scope.field = $scope.tag;
-                        $scope.reverse = !config.sort.asc;
-                    }
-                }
 
                 $scope.setSorting = function () {
 
@@ -37,14 +17,7 @@ angular.module("sorts")
                     else
                         $scope.state = !$scope.state;
 
-                    var config = JSON.parse(sessionStorage.getItem(location.pathname));
-
-                    if (config != null)
-                        config.sort = {tag: $scope.tag, asc: $scope.state};
-                    else
-                        config = {sort: {tag: $scope.tag, asc: $scope.state}};
-
-                    sessionStorage.setItem(location.pathname, JSON.stringify(config));
+                    var config = {sort: {tag: $scope.tag, asc: $scope.state}};
 
                     $scope.field = $scope.tag;
                     $scope.reverse = !config.sort.asc;
@@ -56,9 +29,6 @@ angular.module("sorts")
                     if (data !== $scope.tag)
                         $scope.state = undefined;
                 });
-
-                getSorting();
-
             }],
 
             template = '<div ng-click="setSorting()" style="cursor: pointer;">' +

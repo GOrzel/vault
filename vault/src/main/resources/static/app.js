@@ -8,6 +8,7 @@ angular.module('vault', [
     'vault.fileList',
     'vault.fileView',
     'vault.tagList',
+    'vault.editTagsDialog',
     'vault.about',
     'vault.status',
     'vault.dialog',

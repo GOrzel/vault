@@ -1,0 +1,110 @@
+<md-dialog aria-label="Dodaj nowy certyfikat">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Select tags</h2>
+            <span flex></span>
+            <md-button aria-label="cancel" class="md-icon-button fa fa-times" ng-click="dialog.cancel()"></md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+                <md-content class="md-padding" style="width:800px; height: 600px;">
+                    <!--<form name="form" novalidate>-->
+                        <!--&lt;!&ndash;pem input&ndash;&gt;-->
+                        <!--<div class="row form-group" style="height: 275px;">-->
+                            <!--<div class="col-12">-->
+                                <!--<label for="pemInput" class=" form-control-label">Podaj certyfikat w formacie PEM:</label>-->
+                            <!--</div>-->
+                            <!--<div class="col-12">-->
+            <!--<textarea name="pemInput" id="pemInput" rows="9" placeholder="Certyfikat w formacie PEM" class="form-control"-->
+                      <!--ng-model="$ctrl.pem" ng-pattern="$ctrl.pemRegex" required="" style="resize: none;"-->
+                      <!--ng-class="{'is-invalid': (form.$submitted || form.pemInput.$touched) && (form.pemInput.$error.required || !form.pemInput.$valid)}">-->
+            <!--</textarea>-->
+                            <!--</div>-->
+                            <!--<div ng-show="form.$submitted || form.pemInput.$touched" class="col-12">-->
+                                <!--<small ng-show="form.pemInput.$error.required" class="form-text" style="color: red">Certyfikat jest wymagany</small>-->
+                                <!--<small ng-show="!form.pemInput.$error.required && !form.pemInput.$valid" class="form-text" style="color: red">Nieprawidłowy format cetyfikatu</small>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;buttons&ndash;&gt;-->
+                        <!--<div class="row form-group">-->
+                            <!--<div class="col-12" style="text-align: right;">-->
+                                <!--<button type="submit" class="btn btn-primary" ng-click="$ctrl.onSubmit(form)" title="Dodaj nowy urząd certyfikacji">-->
+                                    <!--<i class="fa fa-arrow-circle-o-right"></i>&nbsp;Dodaj-->
+                                <!--</button>-->
+                                <!--<button type="reset" class="btn btn-secondary" ng-click="$ctrl.onReset(form)" title="Wyczyść formularz">-->
+                                    <!--<i class="fa fa-magic"></i>&nbsp;Wyczyść-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col" width="10%">
+                                <sort-control field="sortModel.orderByField" reverse="sortModel.reverseSort" tag="'id'">
+                                    Id
+                                </sort-control>
+                            </th>
+                            <th scope="col" width="70%">
+                                <sort-control field="sortModel.orderByField" reverse="sortModel.reverseSort" tag="'name'">
+                                    Name
+                                </sort-control>
+                            </th>
+                            <th scope="col" width="20%">Actions</th>
+                        </tr>
+                        </thead>
+                        <thead>
+                        <tr>
+                            <th>
+                                <input name="text-input" type="text" class="form-control-sm form-control"
+                                       ng-model="dialog.filterModel.id"
+                                       ng-model-options="{debounce : 250}" style="width: 100%;">
+                            </th>
+                            <th>
+                                <input name="text-input" type="text" class="form-control-sm form-control"
+                                       ng-model="dialog.filterModel.name"
+                                       ng-model-options="{debounce : 250}" style="width: 100%;">
+                            </th>
+                            <th style="text-align: center">
+                                <button class="btn btn-secondary btn-sm" ng-click="dialog.resetFilter()"
+                                        title="Clear filters">
+                                    <i class="fa fa-undo"></i>&nbsp;Reset
+                                </button>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in dialog.tags | orderBy:sortModel.orderByField:sortModel.reverseSort | filterTag:dialog.filterModel">
+                            <td scope="row">
+                                {{item.id}}
+                            </td>
+                            <td scope="row">
+                                {{item.name}}
+                            </td>
+                            <td style="text-align: center">
+                                <button ng-if="item.selected === true" type="button" class="btn btn-danger btn-sm" title="Remove"
+                                        ng-click="dialog.disableTag(item)">
+                                    <i class="fa fa-plus"></i>&nbsp;Remove
+                                </button>
+                                <button ng-if="item.selected === false" type="button" class="btn btn-success btn-sm" title="Add"
+                                        ng-click="dialog.enableTag(item)">
+                                    <i class="fa fa-minus"></i>&nbsp;Add
+                                </button>
+
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row form-group">
+                        <div class="col-12" style="text-align: right;">
+                            <button type="submit" class="btn btn-primary" ng-click="dialog.saveTags()">
+                                <i class="fa fa-arrow-circle-o-right"></i>&nbsp;Save tags
+                            </button>
+                            <button type="reset" class="btn btn-secondary" ng-click="dialog.resetTags()">
+                                <i class="fa fa-magic"></i>&nbsp;Reset
+                            </button>
+                        </div>
+                    </div>
+                </md-content>
+    </md-dialog-content>
+</md-dialog>

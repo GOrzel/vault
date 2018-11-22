@@ -1,3 +1,7 @@
+.btn-outline-secondary:hover a{
+    color:white;
+}
+
 .btn-outline-secondary.selectedTabButton{
     background-color: #868e96;
 }

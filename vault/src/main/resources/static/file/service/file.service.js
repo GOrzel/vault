@@ -38,6 +38,7 @@ function FileServiceFactory($http) {
     }
 
     function setTags(fileId, tagIds) {
+        console.log(tagIds);
         return $http.put('/rest/file/' + fileId + '/tag', tagIds);
     }
 
